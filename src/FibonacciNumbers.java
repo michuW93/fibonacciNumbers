@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FibonacciNumbers {
     public static final int N = 4;
@@ -9,11 +11,14 @@ public class FibonacciNumbers {
         result.forEach(System.out::println);
 
         List<Integer> resultFibStream = countFibWithStreams();
-        result.forEach(System.out::println);
+        resultFibStream.forEach(System.out::println);
     }
 
     private static List<Integer> countFibWithStreams() {
-        List<Integer> result = new ArrayList<>();
+        List<Integer> result = Stream.iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]})
+                .limit(N)
+                .map(t -> t[0])
+                .collect(Collectors.toList());
         return result;
     }
 
